@@ -13,7 +13,7 @@ class ProjectSubmissionsController < ApplicationController
   end
 
   def update
-    if @project_submission.update(project_submission_params)
+    if @project_submission.update(project_submission_params.merge(discard_at: nil))
       render json: ProjectSubmissionSerializer.as_json(@project_submission, current_user), status: :ok
     else
       render json: @project_submission.errors, status: :unprocessable_entity

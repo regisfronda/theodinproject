@@ -63,6 +63,10 @@ group :development, :test, :docker do
   gem 'webmock', '~> 3.14'
 end
 
+group :test do
+  gem 'rspec-sidekiq', '~>3.1.0'
+end
+
 group :development, :docker do
   gem 'better_errors'
   gem 'binding_of_caller', '~> 1.0'

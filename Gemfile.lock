@@ -437,6 +437,9 @@ GEM
       rspec-support (~> 3.10)
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
+    rspec-sidekiq (3.1.0)
+      rspec-core (~> 3.0, >= 3.0.0)
+      sidekiq (>= 2.4.0)
     rspec-support (3.10.2)
     rubocop (1.19.1)
       parallel (~> 1.10)
@@ -603,6 +606,7 @@ DEPENDENCIES
   reek
   rspec-rails
   rspec-retry (~> 0.6.2)
+  rspec-sidekiq (~> 3.1.0)
   rubocop (>= 1.12.1)
   rubocop-performance (>= 1.10.2)
   rubocop-rails (~> 2.11)

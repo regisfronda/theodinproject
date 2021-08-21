@@ -44,4 +44,48 @@ RSpec.describe ProjectSubmission, type: :model do
       expect(ProjectSubmission.created_today).to contain_exactly(project_submission_created_today)
     end
   end
+
+  describe '.discardable' do
+    context 'when the project submission discard_at date is in the past' do
+      let(:project_submission) { create(:project_submission, discard_at: 8.days.ago) }
+
+      it 'returns a list including the project submission' do
+        expect(described_class.discardable).to include(project_submission)
+      end
+    end
+
+    context 'when the project submission discard_at date is in the future' do
+      let(:project_submission) { create(:project_submission, discard_at: 1.day.from_now) }
+
+      it 'returns a list not including the project submission' do
+        expect(described_class.discardable).not_to include(project_submission)
+      end
+    end
+
+    context 'when the project submission discard_at date is today' do
+      let(:project_submission) { create(:project_submission, discard_at: 5.minutes.ago) }
+
+      it 'returns a list including the project submission' do
+        expect(described_class.discardable).to include(project_submission)
+      end
+    end
+
+    context 'when the project submission discard_at date is nil' do
+      let(:project_submission) { create(:project_submission, discard_at: nil) }
+
+      it 'returns a list not including the project submission' do
+        expect(described_class.discardable).not_to include(project_submission)
+      end
+    end
+
+    context 'when the project_submission is not viewable' do
+      let(:project_submission) do
+        create(:project_submission, banned: true, discarded_at: 10.days.ago, is_public: false, discard_at: 6.days.ago)
+      end
+
+      it 'returns a list not including the project submission' do
+        expect(described_class.discardable).not_to include(project_submission)
+      end
+    end
+  end
 end
